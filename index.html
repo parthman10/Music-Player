@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       
+        <title> Music Player design</title>
+        <link rel="stylesheet" href="index.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class="fa fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa fa-bars"></i>
+                </div>
+            </nav>
+            <img src="https://c.saavncdn.com/326/Jiya-Dhadak-Dhadak-Hindi-2023-20231127165035-500x500.jpg" class="song-img">
+            <h1>Jiya-Dhadak-Dhadak</h1>
+            <P>Rahat Fateh Ali Khan</P>
+
+            <audio id="song">
+                <source src="./assets/new_320_05 - Jiya Dhadak Dhadak Jaaye - Kalyug (2005).mp3" type="audio/mp3">
+            </audio>
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+                <div><i class="fa fa-backward"></i></div>
+                <div onclick="playPause()"><i class="fa fa-play" id="ctrlIcon"></i></div>
+                <div><i class="fa fa-forward"></i></div>
+            </div>
+            </div>
+        </div>
+
+        <script>
+            let progress = document.getElementById("progress");
+            let song = document.getElementById("song");
+            let ctrlIcon = document.getElementById("ctrlIcon");
+
+            song.onloadedmetadata = function(){
+                progress. max = song.duration;
+                progress. val = song.currentTime ;
+            }
+
+            function playPause(){
+                if(ctrlIcon.classList.contains("fa-pause")){
+                    song.pause();
+                    ctrlIcon.classList.remove("fa-pause");
+                    ctrlIcon.classList.add("fa-play");  
+                }
+                else{
+                    song.play();
+                    ctrlIcon.classList.add("fa-pause");
+                    ctrlIcon.classList.remove("fa-play"); 
+
+                }
+            }
+
+            if(song.play()){
+                setInterval(()=>{
+                    progress.value=song.currentTime;
+                },500);
+            }
+
+            progress.onchange=function(){
+                song.play();
+                song.currentTime=progress.value;
+                ctrlIcon.classList.add("fa-pause");
+                ctrlIcon.classList.remove("fa-play");
+            }
+        </script>
+        
+    </body>
+</html>
+
